@@ -1,0 +1,35 @@
+name: Terraform Destroy (Prod)
+
+on:
+  workflow_dispatch:   # manual trigger
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (Prod)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::557690622944:role/github-actions-role
+          aws-region: ${{ secrets.PROD_AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.0
+
+      - name: Terraform Init
+        working-directory: infra/terraform/envs/prod
+        run: terraform init -migrate-state
+
+      - name: Terraform Destroy (Prod)
+        working-directory: infra/terraform/envs/prod
+        run: terraform destroy -auto-approve

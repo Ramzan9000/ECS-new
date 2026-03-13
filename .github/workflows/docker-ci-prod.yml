@@ -1,0 +1,97 @@
+name: Build and Push Docker Image (Prod)
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Terraform Apply (Prod)"]
+    types: [completed]
+
+permissions:
+  id-token: write
+  contents: read
+  actions: read     # required to download artifacts
+
+jobs:
+  build-and-push:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@v3.3.0
+        with:
+          dockerfile: ./docker/Dockerfile
+
+      # ✅ Download the artifact from the latest Terraform workflow run
+      - name: Download ECR URL artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ecr-url-prod   # matches Terraform upload
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{github.token }}
+          repository: ${{ github.repository }}
+          path: infra/terraform/envs/prod
+
+
+      - name: Verify artifact
+        run: |
+          echo "Files in infra/terraform/envs/prod:"
+          ls -l infra/terraform/envs/prod
+
+
+      - name: Read ECR URL
+        run: |
+          ECR_URL=$(cat infra/terraform/envs/prod/ecr_repo_url.txt)
+          echo "REPO_URL=$ECR_URL" >> $GITHUB_ENV
+          echo "Using $ECR_URL"
+
+
+
+      # ✅ Configure AWS credentials for Docker
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::557690622944:role/github-actions-role
+          aws-region: ${{ secrets.PROD_AWS_REGION }}
+
+      # ✅ Login to ECR
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+        
+      # ✅ Build Docker image
+      - name: Build Docker image
+        run: |
+          echo "Building Docker image $REPO_URL:prod-latest"
+          docker build -t "${REPO_URL}:prod-latest" -f docker/Dockerfile .
+
+      # ✅ Push Docker image
+      - name: Push Docker image to ECR
+        run: |
+          docker push "${REPO_URL}:prod-latest"
+
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.0
+          terraform_wrapper: false
+
+
+      - name: Terraform Init
+        working-directory: infra/terraform/envs/prod
+        run: terraform init
+
+
+      - name: Update ECS Task Definition
+        working-directory: infra/terraform/envs/prod
+        run: |
+          REPO_URL=$(cat ecr_repo_url.txt)
+          terraform apply -auto-approve \
+            -var="container_image=${REPO_URL}:prod-latest"
+
+

@@ -1,0 +1,79 @@
+name: Terraform Apply (Dev)
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+
+permissions:
+  id-token: write
+  contents: read
+
+
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    outputs:
+      ecr_repo_url: ${{ steps.terraform.outputs.ecr_repo_url }}
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      # --- OIDC login ---
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::557690622944:role/github-actions-role
+          aws-region: ${{ secrets.DEV_AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.0
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        working-directory: infra/terraform/envs/dev
+        run: terraform init
+
+      - name: Terraform Format
+        working-directory: infra/terraform
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Validate
+        working-directory: infra/terraform/envs/dev
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: infra/terraform/envs/dev
+        run: terraform plan -out=tfplan
+
+      
+      - name: Terraform Apply (DEV auto-approve)
+        id: terraform
+        working-directory: infra/terraform/envs/dev
+        run: terraform apply -auto-approve tfplan
+
+      - name: Save ECR URL
+        working-directory: infra/terraform/envs/dev
+        run: terraform output -raw ecr_repository_url > ecr_repo_url.txt
+
+
+      - name: Verify ECR URL file
+        working-directory: infra/terraform/envs/dev
+        run: |
+          cat ecr_repo_url.txt
+
+
+      - name: Upload ECR URL artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecr-url-Dev
+          path: infra/terraform/envs/dev/ecr_repo_url.txt
+          

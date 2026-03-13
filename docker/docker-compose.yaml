@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+
+  threat-composer:
+    image: ecs-threat-composer:latest
+
+    build:
+     context: .
+     dockerfile: dockerfile
+
+    ports:
+      - "80:80"
+    
+    restart: unless-stopped
