@@ -52,3 +52,7 @@ Thumbs.db
 .vscode/
 *.sublime-workspace
 *.sublime-project
+
+**/.terraform/*
+*.tfstate
+*.tfstate.*
