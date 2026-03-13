@@ -98,4 +98,5 @@ jobs:
         run: |
           REPO_URL=$(cat ecr_repo_url.txt)
           terraform apply -auto-approve \
-            -var="container_image=${REPO_URL}:dev-latest"
+            -var="use_placeholder=false" \
+            -var="real_image=${REPO_URL}:dev-latest"
