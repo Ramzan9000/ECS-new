@@ -1,6 +1,6 @@
 
 variable "vpc_id" {
-  type = string
+  type        = string
   description = "id of vpc"
 }
 
@@ -18,7 +18,7 @@ variable "alb_ingress_ipv6" {
 }
 
 variable "app_container_port" {
-  type = number
+  type        = number
   description = " the container your app logic says it deploys on"
 
 }

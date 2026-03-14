@@ -86,11 +86,11 @@ resource "aws_security_group" "ecs_sg" {
 
 
 resource "aws_vpc_security_group_ingress_rule" "alb_traffic" {
-  security_group_id = aws_security_group.ecs_sg.id
+  security_group_id            = aws_security_group.ecs_sg.id
   referenced_security_group_id = aws_security_group.alb_sg.id
-  from_port         = var.app_container_port # port where app container listens 
-  ip_protocol       = "tcp"
-  to_port           = var.app_container_port
+  from_port                    = var.app_container_port # port where app container listens 
+  ip_protocol                  = "tcp"
+  to_port                      = var.app_container_port
 
 }
 

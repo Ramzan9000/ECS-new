@@ -1,13 +1,13 @@
 
 variable "app_container_port" {
-  type = number
+  type        = number
   description = "Port that the application inside the container listens on"
 
 }
 
 
 variable "vpc_id" {
-  type = string
+  type        = string
   description = "ID of the VPC where the load balancer and related networking resources are created."
 }
 

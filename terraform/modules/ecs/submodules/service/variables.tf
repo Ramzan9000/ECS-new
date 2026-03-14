@@ -38,7 +38,7 @@ variable "target_group_arn" {
 variable "security_groups" {
   type        = list(string)
   description = "List of security group IDs to associate with the resource"
-} 
+}
 
 
 

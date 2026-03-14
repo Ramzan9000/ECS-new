@@ -10,7 +10,7 @@ resource "aws_ecs_task_definition" "app" {
   family                   = var.family
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  cpu                      = var.task_cpu  
+  cpu                      = var.task_cpu
   memory                   = var.task_memory
   execution_role_arn       = var.execution_role_arn # make this var anf get from iam output usisng root main.tf 
 

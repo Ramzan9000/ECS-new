@@ -24,32 +24,32 @@ variable "container_name" {
 
 
 variable "container_port" {
-  type = number
+  type        = number
   description = "port app container is on"
 }
 
 
 variable "task_cpu" {
-  type = number
+  type        = number
   description = " cpu units per ecs task "
 }
 
 
 variable "task_memory" {
-  type = number 
+  type        = number
   description = " memory per ecs task"
 }
 
 
 
 variable "execution_role_arn" {
-  type = string
+  type        = string
   description = " ARN of the IAM execution role used by ECS tasks to pull images and write logs."
 }
 
 
 
 variable "region" {
-  type = string
+  type        = string
   description = "AWS region of deployment"
 }

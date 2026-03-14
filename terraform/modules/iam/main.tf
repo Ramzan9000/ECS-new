@@ -25,8 +25,8 @@ resource "aws_iam_role" "ecs_execution_r" {
 
 data "aws_iam_policy_document" "ecs_execution_policy" {
   statement {
-    effect    = "Allow"
-    actions   = [
+    effect = "Allow"
+    actions = [
       "ecr:GetAuthorizationToken",
       "ecr:BatchCheckLayerAvailability",
       "ecr:GetDownloadUrlForLayer",

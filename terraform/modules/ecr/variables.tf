@@ -1,5 +1,5 @@
 
 variable "ecr_repo_name" {
-  type = string
+  type        = string
   description = "name of ecr repo"
 }

@@ -14,29 +14,29 @@ variable "real_image" {
 }
 
 variable "container_port" {
-  type = number
+  type        = number
   description = "port app container is on"
 }
 
 
 variable "task_cpu" {
-  type = number
+  type        = number
   description = " cpu units per ecs task "
 }
 
 variable "task_memory" {
-  type = number 
+  type        = number
   description = " memory per ecs task"
 }
 
 
 variable "execution_role_arn" {
-  type = string
+  type        = string
   description = " ARN of the IAM execution role used by ECS tasks to pull images and write logs."
 }
 
 variable "region" {
-  type = string
+  type        = string
   description = "AWS region of deployment"
 }
 
@@ -61,14 +61,14 @@ variable "desired_task_count" {
 variable "private_subnet_ids" {
   type        = list(string)
   description = "List of private subnet IDs where the ECS tasks will be deployed."
-} 
+}
 
 
 
 variable "target_group_arn" {
   type        = string
   description = "ARN of the load balancer target group that the ECS service will register tasks with."
-} 
+}
 
 
 variable "security_groups" {

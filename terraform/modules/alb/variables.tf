@@ -2,13 +2,13 @@
 ### for the alb resource ###
 
 variable "alb_security_group_id" {
-  type = string
+  type        = string
   description = "ID of the security group attached to the Application Load Balancer"
 }
 
 
 variable "public_subnet_ids" {
-  type = list (string)
+  type        = list(string)
   description = "List of public subnet IDs where the Application Load Balancer will be deployed. These subnets should be in different Availability Zones"
 }
 
@@ -17,7 +17,7 @@ variable "public_subnet_ids" {
 
 
 variable "certificate_arn" {
-  type = string
+  type        = string
   description = "ARN of the ACM SSL/TLS certificate used by the load balancer for HTTPS."
 }
 
@@ -27,14 +27,14 @@ variable "certificate_arn" {
 
 
 variable "app_container_port" {
-  type = number
+  type        = number
   description = "Port that the application inside the container listens on"
 
 }
 
 
 variable "vpc_id" {
-  type = string
+  type        = string
   description = "ID of the VPC where the load balancer and related networking resources are created."
 }
 
