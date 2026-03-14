@@ -27,12 +27,10 @@ module "ecr" {
 module "security_group" {
   source = "../../modules/security_group"
 
-  vpc_id = module.vpc.vpc_id
-  cidr_ipv4 = module.vpc.cidr_ipv4
-  cidr_ipv6 = module.vpc.cidr_ipv6
+  vpc_id             = module.vpc.vpc_id
+  alb_ingress_ipv4   = var.alb_ingress_ipv4
+  alb_ingress_ipv6   = var.alb_ingress_ipv6
   app_container_port = var.app_container_port
-
-  
 }
 
 
@@ -137,5 +135,7 @@ module "ecs" {
   private_subnet_ids  = module.vpc.private_subnet_ids
   target_group_arn    = module.alb.target_group_arn
   security_groups     = [module.security_group.ecs_security_group_id]
+
+  depends_on = [module.alb]
   
 }

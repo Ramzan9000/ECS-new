@@ -60,15 +60,17 @@ variable "ecr_repo_name" {
 ### secuirty_group module ###
 
 
-variable "cidr_ipv4" {
-  type = string
-  description = "IPv4 addresses inside the VPC"
+variable "alb_ingress_ipv4" {
+  type        = string
+  description = "IPv4 CIDR allowed to reach the ALB"
 }
 
-variable "cidr_ipv6" {
-  type = string
-  description = "IPv6 addresses inside the VPC"
+variable "alb_ingress_ipv6" {
+  type        = string
+  description = "IPv6 CIDR allowed to reach the ALB"
+  default     = ""
 }
+
 
 
 ### iam ###

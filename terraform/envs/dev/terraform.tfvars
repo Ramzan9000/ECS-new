@@ -11,8 +11,8 @@ availability_zone_2      = "eu-west-2b"
 
 ecr_repo_name            = "dev-thr-composer-repo"
 
-cidr_ipv4                = "0.0.0.0/0"
-cidr_ipv6                = "::/0"
+alb_ingress_ipv4         = "0.0.0.0/0"
+alb_ingress_ipv6         = ""
 
 ecs_execution_role_name   = "ecsTaskExecutionRole"
 ecs_execution_policy_name = "ecsTaskExecutionPolicy"
