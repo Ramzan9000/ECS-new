@@ -33,6 +33,7 @@ module "service" {
   desired_task_count      = var.desired_task_count
   private_subnet_ids      = var.private_subnet_ids #module
   container_port          = var.container_port 
+  container_name          = var.container_name
   target_group_arn        = var.target_group_arn #module
   security_groups         = var.security_groups #module
   

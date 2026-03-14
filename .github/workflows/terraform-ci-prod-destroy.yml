@@ -27,9 +27,9 @@ jobs:
           terraform_version: 1.6.0
 
       - name: Terraform Init
-        working-directory: infra/terraform/envs/prod
+        working-directory: terraform/envs/prod
         run: terraform init -migrate-state
 
       - name: Terraform Destroy (Prod)
-        working-directory: infra/terraform/envs/prod
+        working-directory: terraform/envs/prod
         run: terraform destroy -auto-approve

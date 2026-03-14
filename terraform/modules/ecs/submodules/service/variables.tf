@@ -39,3 +39,10 @@ variable "security_groups" {
   type        = list(string)
   description = "List of security group IDs to associate with the resource"
 } 
+
+
+
+variable "container_name" {
+  type        = string
+  description = "Name of the container defined inside the ECS task definition"
+}
