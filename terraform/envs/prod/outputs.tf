@@ -37,3 +37,10 @@ output "task_definition_arn" {
   value       = module.ecs.task_definition_arn
   description = "ARN of the ECS task definition."
 }
+
+
+
+output "ecr_repository_url" {
+  value       = module.ecr.ecr_repository_url
+  description = "ecr repo url "
+}
