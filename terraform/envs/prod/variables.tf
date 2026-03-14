@@ -1,3 +1,4 @@
+
 ### VPC module and submodules ###
 
 variable "cidr_block" {
@@ -12,35 +13,35 @@ variable "region" {
 }
 
 variable "private_subnet_az_1_cidr" {
-  type = string
+  type        = string
   description = "Cidr for the first private VPC"
 }
 
 
 variable "private_subnet_az_2_cidr" {
-  type = string
+  type        = string
   description = "Cidr for the second private VPC"
 }
 
 
 variable "public_subnet_az_1_cidr" {
-  type = string
+  type        = string
   description = "Cidr block for the first public subnet"
 }
 
 
 variable "public_subnet_az_2_cidr" {
-  type = string
+  type        = string
   description = "Cidr block for the second public subnet"
 }
 
 variable "availability_zone_1" {
-  type = string
+  type        = string
   description = "First Availability Zone used for subnet deployment "
 }
 
 variable "availability_zone_2" {
-  type = string
+  type        = string
   description = "Second Availability Zone used for subnet deployment "
 }
 
@@ -50,7 +51,7 @@ variable "availability_zone_2" {
 
 
 variable "ecr_repo_name" {
-  type = string
+  type        = string
   description = "name of ecr repo"
 }
 
@@ -59,27 +60,29 @@ variable "ecr_repo_name" {
 ### secuirty_group module ###
 
 
-variable "cidr_ipv4" {
-  type = string
-  description = "IPv4 addresses inside the VPC"
+variable "alb_ingress_ipv4" {
+  type        = string
+  description = "IPv4 CIDR allowed to reach the ALB"
 }
 
-variable "cidr_ipv6" {
-  type = string
-  description = "IPv6 addresses inside the VPC"
+variable "alb_ingress_ipv6" {
+  type        = string
+  description = "IPv6 CIDR allowed to reach the ALB"
+  default     = ""
 }
+
 
 
 ### iam ###
 
 variable "ecs_execution_role_name" {
-  type = string
+  type        = string
   description = "role name"
 }
 
 
 variable "ecs_execution_policy_name" {
-  type = string
+  type        = string
   description = "policy name"
 }
 
@@ -88,7 +91,7 @@ variable "ecs_execution_policy_name" {
 
 
 variable "domain_name" {
-  type = string
+  type        = string
   description = "domain name"
 }
 
@@ -100,7 +103,7 @@ variable "domain_name" {
 
 
 variable "app_container_port" {
-  type = number
+  type        = number
   description = "Port that the application inside the container listens on"
 }
 
@@ -109,18 +112,18 @@ variable "app_container_port" {
 
 
 variable "task_cpu" {
-  type = number
+  type        = number
   description = " cpu units per ecs task "
 }
 
 variable "task_memory" {
-  type = number 
+  type        = number
   description = " memory per ecs task"
 }
 
 
 variable "container_port" {
-  type = number
+  type        = number
   description = "port app container is on"
 }
 
