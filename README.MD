@@ -144,7 +144,7 @@ The screenshots below demonstrate the deployed AWS infrastructure and applicatio
 
 
 ### CloudWatch logs
-![CloudWatch logs](screenshots/cloudWatch-log-events.png)
+![CloudWatch logs](screenshots/CloudWatch-log-events.png)
 
 
 ## High-Level Architecture & Traffic Flow
