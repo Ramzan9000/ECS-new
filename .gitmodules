@@ -1,0 +1,3 @@
+[submodule "app/threat-composer"]
+	path = app/threat-composer
+	url = https://github.com/CoderCo-Learning/ecs-assignment
