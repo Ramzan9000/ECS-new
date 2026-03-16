@@ -43,4 +43,4 @@ output "task_definition_arn" {
 output "ecr_repository_url" {
   value       = module.ecr.ecr_repository_url
   description = "ecr repo url "
-
+}
