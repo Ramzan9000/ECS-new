@@ -383,6 +383,8 @@ Docker images are built and pushed to Amazon ECR through the CI pipeline and tag
 
 #### CI Workflow (docker-ci-dev.yml / docker-ci-prod.yml)
 
+![GitHub Workflows](screenshots/workflows-complete.png)
+
 1. Checks out the repository
 2. Builds the Docker image from the application source
 3. Scans the container image for vulnerabilities
